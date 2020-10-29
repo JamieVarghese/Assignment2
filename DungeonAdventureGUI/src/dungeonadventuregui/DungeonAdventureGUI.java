@@ -19,9 +19,9 @@ public class DungeonAdventureGUI extends javax.swing.JFrame {
     {
         initComponents();
         ResizeImages resizeImg = new ResizeImages();
+        Descriptions descriptionsText = new Descriptions();
         mainDungeonAdvImage.setIcon(resizeImg.resizeImage("D:\\Documents\\NetBeans -JAVA\\Projects\\Assignment 2-17981815\\Assignment2\\DungeonAdventureGUI\\src\\Images Used\\DungeonAdventure.jpg",mainDungeonAdvImage));
-        
-        
+        this.introDescription.setText(descriptionsText.welcome());
     }
     
     /**
@@ -37,6 +37,8 @@ public class DungeonAdventureGUI extends javax.swing.JFrame {
         showScoreboard = new javax.swing.JButton();
         quitMainWindow = new javax.swing.JButton();
         mainDungeonAdvImage = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        introDescription = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("DungeonAdventure");
@@ -59,30 +61,40 @@ public class DungeonAdventureGUI extends javax.swing.JFrame {
 
         mainDungeonAdvImage.setText("jLabel1");
 
+        introDescription.setColumns(20);
+        introDescription.setRows(5);
+        jScrollPane2.setViewportView(introDescription);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(244, 244, 244)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(quitMainWindow, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(showScoreboard)
-                    .addComponent(play, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(showScoreboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(play, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(quitMainWindow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
             .addComponent(mainDungeonAdvImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(mainDungeonAdvImage, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(mainDungeonAdvImage, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(play)
-                .addGap(40, 40, 40)
-                .addComponent(showScoreboard)
-                .addGap(37, 37, 37)
-                .addComponent(quitMainWindow)
-                .addGap(20, 20, 20))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(play)
+                        .addGap(26, 26, 26)
+                        .addComponent(showScoreboard)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addComponent(quitMainWindow))
+                    .addComponent(jScrollPane2))
+                .addContainerGap())
         );
 
         pack();
@@ -104,6 +116,7 @@ public class DungeonAdventureGUI extends javax.swing.JFrame {
      */
     public static void main(String args[]) 
     {
+
        // mainDungeonAdvImage.setIcon(resizeImg.resizeImage("\"D:\\\\Documents\\\\NetBeans -JAVA\\\\Projects\\\\Assignment 2-17981815\\\\Assignment2\\\\DungeonAdventureGUI\\\\src\\\\Images Used\\\\DungeonAdventure.jpg\"", mainDungeonAdvImage));
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -128,7 +141,6 @@ public class DungeonAdventureGUI extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() 
         {
@@ -137,9 +149,12 @@ public class DungeonAdventureGUI extends javax.swing.JFrame {
                 new DungeonAdventureGUI().setVisible(true);
             }
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea introDescription;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel mainDungeonAdvImage;
     private javax.swing.JButton play;
     private javax.swing.JButton quitMainWindow;
