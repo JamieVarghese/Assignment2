@@ -10,12 +10,29 @@ package dungeonadventuregui;
  * @author Jamie
  */
 public class CharacterSelection extends javax.swing.JFrame {
+    
+    Player p;
+    public static boolean tankIndicate = false;
+    public static boolean warriorIndicate = false;
+    public static boolean mageIndicate = false;
 
     /**
      * Creates new form CharacterSelection
      */
-    public CharacterSelection() {
+    public CharacterSelection() 
+    {
         initComponents();
+        ResizeImages resizeImg = new ResizeImages();
+        PathFileImage pathImage = new PathFileImage();
+        Descriptions descriptionsText = new Descriptions();       
+        startAdventure.setEnabled(false);
+        tank.setIcon(resizeImg.resizeImage(pathImage.imageBasedOnFilePath(60), tank));
+        warrior.setIcon(resizeImg.resizeImage(pathImage.imageBasedOnFilePath(55), warrior));
+        mage.setIcon(resizeImg.resizeImage(pathImage.imageBasedOnFilePath(45), mage));
+        this.tankDescription.setText(descriptionsText.describeCharatacters(0));
+        this.warDescription.setText(descriptionsText.describeCharatacters(1));
+        this.mageDescription.setText(descriptionsText.describeCharatacters(2));
+        
     }
 
     /**
@@ -27,31 +44,22 @@ public class CharacterSelection extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
+        tank = new javax.swing.JLabel();
+        warrior = new javax.swing.JLabel();
+        mage = new javax.swing.JLabel();
         startAdventure = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        mageDescription = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tankDescription = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        warDescription = new javax.swing.JTextArea();
+        tankCheck = new javax.swing.JRadioButton();
+        warriorCheck = new javax.swing.JRadioButton();
+        mageCheck = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Character Selection");
-
-        jLabel1.setText("jLabel1");
-
-        jLabel2.setText("jLabel2");
-
-        jLabel3.setText("jLabel3");
-
-        jCheckBox1.setText("jCheckBox1");
-
-        jCheckBox2.setText("jCheckBox2");
-
-        jCheckBox3.setText("jCheckBox3");
 
         startAdventure.setText("Start Adventure");
         startAdventure.addActionListener(new java.awt.event.ActionListener() {
@@ -60,11 +68,38 @@ public class CharacterSelection extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("jLabel4");
+        mageDescription.setColumns(20);
+        mageDescription.setRows(5);
+        jScrollPane1.setViewportView(mageDescription);
 
-        jLabel5.setText("jLabel5");
+        tankDescription.setColumns(20);
+        tankDescription.setRows(5);
+        jScrollPane2.setViewportView(tankDescription);
 
-        jLabel6.setText("jLabel6");
+        warDescription.setColumns(20);
+        warDescription.setRows(5);
+        jScrollPane3.setViewportView(warDescription);
+
+        tankCheck.setText("Tank");
+        tankCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tankCheckActionPerformed(evt);
+            }
+        });
+
+        warriorCheck.setText("Warrior");
+        warriorCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                warriorCheckActionPerformed(evt);
+            }
+        });
+
+        mageCheck.setText("Mage");
+        mageCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mageCheckActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,55 +109,50 @@ public class CharacterSelection extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(mage, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                            .addComponent(warrior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tank, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2)
+                            .addComponent(jScrollPane3))
+                        .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jCheckBox2)
-                            .addComponent(jCheckBox3)))
+                            .addComponent(tankCheck)
+                            .addComponent(warriorCheck)
+                            .addComponent(mageCheck)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(216, 216, 216)
+                        .addGap(209, 209, 209)
                         .addComponent(startAdventure)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tank, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tankCheck))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(warrior, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(warriorCheck))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCheckBox3)
-                        .addGap(64, 64, 64))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBox1))
-                        .addGap(68, 68, 68)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jCheckBox2)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(101, 101, 101)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(startAdventure)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mage, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(48, 48, 48)
+                        .addComponent(startAdventure))
+                    .addComponent(mageCheck))
+                .addGap(37, 37, 37))
         );
 
         pack();
@@ -130,26 +160,74 @@ public class CharacterSelection extends javax.swing.JFrame {
 
     private void startAdventureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAdventureActionPerformed
         dispose();
-        Play play = new Play();
+        Play play = new Play(p);
         play.setVisible(true);
     }//GEN-LAST:event_startAdventureActionPerformed
+
+    private void tankCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tankCheckActionPerformed
+        mageCheck.setEnabled(false);
+        warriorCheck.setEnabled(false);
+        startAdventure.setEnabled(true);
+        tankIndicate = true;
+        if(tankCheck.isSelected() == false)
+        {
+            mageCheck.setEnabled(true);
+            warriorCheck.setEnabled(true);
+            startAdventure.setEnabled(false);
+            tankIndicate = false;
+        }
+    }//GEN-LAST:event_tankCheckActionPerformed
+
+    private void warriorCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warriorCheckActionPerformed
+        mageCheck.setEnabled(false);
+        tankCheck.setEnabled(false);
+        startAdventure.setEnabled(true);
+        warriorIndicate = true;
+        if(warriorCheck.isSelected() == false)
+        {
+            mageCheck.setEnabled(true);
+            tankCheck.setEnabled(true);
+            warriorIndicate = false;
+            startAdventure.setEnabled(false);
+        }
+    }//GEN-LAST:event_warriorCheckActionPerformed
+
+    private void mageCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mageCheckActionPerformed
+        warriorCheck.setEnabled(false);
+        tankCheck.setEnabled(false);
+        startAdventure.setEnabled(true);
+        mageIndicate = true;
+        if(mageCheck.isSelected() == false)
+        {
+            warriorCheck.setEnabled(true);
+            tankCheck.setEnabled(true);
+            mageIndicate = false;
+            startAdventure.setEnabled(false);
+        }
+    }//GEN-LAST:event_mageCheckActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) 
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+         */         
+        try 
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) 
+            {
+                if ("Nimbus".equals(info.getName())) 
+                {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
+            
+            
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(CharacterSelection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -167,18 +245,22 @@ public class CharacterSelection extends javax.swing.JFrame {
                 new CharacterSelection().setVisible(true);
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel mage;
+    private javax.swing.JRadioButton mageCheck;
+    private javax.swing.JTextArea mageDescription;
     private javax.swing.JButton startAdventure;
+    private javax.swing.JLabel tank;
+    private javax.swing.JRadioButton tankCheck;
+    private javax.swing.JTextArea tankDescription;
+    private javax.swing.JTextArea warDescription;
+    private javax.swing.JLabel warrior;
+    private javax.swing.JRadioButton warriorCheck;
     // End of variables declaration//GEN-END:variables
 }
