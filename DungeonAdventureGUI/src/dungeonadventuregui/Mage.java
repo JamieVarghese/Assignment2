@@ -35,6 +35,7 @@ public class Mage extends Player
                int y = this.getAttackDmg();
                this.setAttackDmg(y *2);
            }
+           intelligence = intelligence -1;
         }
     }
     
@@ -44,10 +45,8 @@ public class Mage extends Player
     
     public void changeIntelligence()
     {
-        intelligence = intelligence -1;
         int y = this.getAttackDmg();
-        this.setAttackDmg(y/2);
-        
+        this.setAttackDmg(y/2);       
     }
     
     public int getIntelligence()
