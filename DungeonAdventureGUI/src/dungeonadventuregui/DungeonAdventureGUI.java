@@ -23,11 +23,10 @@ public class DungeonAdventureGUI extends javax.swing.JFrame {
         initComponents();
         ResizeImages resizeImg = new ResizeImages();
         Descriptions descriptionsText = new Descriptions();
-        database.establishConnection();
-        database.createTable();
         mainDungeonAdvImage.setIcon(resizeImg.resizeImage("D:\\Documents\\NetBeans -JAVA\\Projects\\Assignment 2-17981815\\Assignment2\\DungeonAdventureGUI\\src\\Images Used\\DungeonAdventure.jpg",mainDungeonAdvImage));
         this.introDescription.setText(descriptionsText.welcome());
-        
+       // database.establishConnection();
+       // database.createTable();
     }
     
     /**
