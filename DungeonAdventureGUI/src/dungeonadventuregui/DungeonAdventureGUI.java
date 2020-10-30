@@ -15,13 +15,19 @@ public class DungeonAdventureGUI extends javax.swing.JFrame {
     /**
      * Creates new form MainGUI
      */
+    
+    DBManager database = new DBManager();
+    
     public DungeonAdventureGUI() 
     {
         initComponents();
         ResizeImages resizeImg = new ResizeImages();
         Descriptions descriptionsText = new Descriptions();
+        database.establishConnection();
+        database.createTable();
         mainDungeonAdvImage.setIcon(resizeImg.resizeImage("D:\\Documents\\NetBeans -JAVA\\Projects\\Assignment 2-17981815\\Assignment2\\DungeonAdventureGUI\\src\\Images Used\\DungeonAdventure.jpg",mainDungeonAdvImage));
         this.introDescription.setText(descriptionsText.welcome());
+        
     }
     
     /**
@@ -51,6 +57,11 @@ public class DungeonAdventureGUI extends javax.swing.JFrame {
         });
 
         showScoreboard.setText("Scoreboard");
+        showScoreboard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showScoreboardActionPerformed(evt);
+            }
+        });
 
         quitMainWindow.setText("Quit");
         quitMainWindow.addActionListener(new java.awt.event.ActionListener() {
@@ -110,6 +121,12 @@ public class DungeonAdventureGUI extends javax.swing.JFrame {
     private void quitMainWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitMainWindowActionPerformed
         dispose();
     }//GEN-LAST:event_quitMainWindowActionPerformed
+
+    private void showScoreboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showScoreboardActionPerformed
+        int previousScore = database.getQuery();
+        this.introDescription.setText(Integer.toString(previousScore));
+        
+    }//GEN-LAST:event_showScoreboardActionPerformed
 
     /**
      * @param args the command line arguments
