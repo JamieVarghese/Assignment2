@@ -71,20 +71,26 @@ public final class DBManager
         }       
     }
     
-    public ResultSet getQuery()
+    public int getQuery()
     {
+        int monsterSlain = 0;
         ResultSet rs = null;
         try
         {
             Statement statement = conn.createStatement();
             rs = statement.executeQuery("SELECT MONSTERS_SLAIN");
+            
+            while(rs.next())
+            {
+                monsterSlain = rs.getInt("A1");
+            }
         }
         catch(SQLException ex)
         {
             System.err.println("SQLException: " + ex.getMessage());
         }
                         
-        return rs;
+        return monsterSlain;
     }
     
     public void checkExistedTable(String name)
