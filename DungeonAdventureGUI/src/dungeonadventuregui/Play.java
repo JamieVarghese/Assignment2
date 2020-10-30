@@ -400,6 +400,9 @@ public class Play extends javax.swing.JFrame {
     
         dispose();
         getTank().NUMBEROFHEALTHPOTIONS = 3;
+        getWarrior().NUMBEROFHEALTHPOTIONS = 3;
+        getMage().NUMBEROFHEALTHPOTIONS = 3;
+        score = 0;
         DungeonAdventureGUI dungeonAdv = new DungeonAdventureGUI();
         dungeonAdv.setVisible(true);
         
@@ -434,6 +437,7 @@ public class Play extends javax.swing.JFrame {
             {
                 Goblin gob = new Goblin();
                 gob = getGoblin();
+               
                 this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You hit the " + gob.getTypeName() + " for:" + pTankCombat.getAttackDmg());
                 gob.setHealth(gob.getHealth() - pTankCombat.getAttackDmg());
                 this.enemyHealthBar.setValue(gob.getHealth());
@@ -643,20 +647,593 @@ public class Play extends javax.swing.JFrame {
                 this.attackButton.setEnabled(false);
                 this.useSpecialSkillButton.setEnabled(false);
                 this.useHealthPotionButton.setEnabled(false);
+                this.spwnMonster.setEnabled(false);
             }
            
         }
         
         if(CharacterSelection.warriorIndicate == true )
         {
-        
+            Warrior pWarrior = new Warrior();
+            pWarrior = getWarrior();
             
+            if(gobMonsterIndicate == true)
+            {
+                Goblin gob = new Goblin();
+                gob = getGoblin();
+                
+                if(pWarrior.getAttackDmg() >= 25)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " You have consumed a Rage stack your attack is enraged" + "\n" + "You hit the " + gob.getTypeName() + " for:" + pWarrior.getAttackDmg() );
+                    gob.setHealth(gob.getHealth() - pWarrior.getAttackDmg());
+                    this.enemyHealthBar.setValue(gob.getHealth());
+                    pWarrior.changeRage();
+                    this.actualPlayerDMG.setText(Integer.toString(pWarrior.getAttackDmg()));
+                    setGoblin(gob);
+                    setWarrior(pWarrior);
+                                           
+                }
+                
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You hit the " + gob.getTypeName() + " for:" + pWarrior.getAttackDmg());
+                    gob.setHealth(gob.getHealth() - pWarrior.getAttackDmg());
+                    this.enemyHealthBar.setValue(gob.getHealth());
+                }
+                
+                if(chanceOfSpecial == 0)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " Oh no the goblin used his special skill you loose a health potion"
+                                                                               + "\n" + "You also recieve: " + gob.getAttackDmg() + "damage ");
+                    gob.specialSkill();
+                    pWarrior.setHealth(pWarrior.getHealth() - gob.getAttackDmg());
+                    this.playerHealth.setValue(pWarrior.getHealth());
+                    this.healthPotionBar.setValue(pWarrior.NUMBEROFHEALTHPOTIONS);
+                }
+                
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You also recieve: " + gob.getAttackDmg() + "damage " );
+                    pWarrior.setHealth(pWarrior.getHealth() - gob.getAttackDmg());
+                    this.playerHealth.setValue(pWarrior.getHealth());
+                }
+                
+                if(gob.getHealth() <= 0)
+                {
+                    disableMonsterSpwn = true;
+                    this.spwnMonster.setEnabled(true);
+                    this.attackButton.setEnabled(false);
+                    this.useHealthPotionButton.setEnabled(false);
+                    this.useSpecialSkillButton.setEnabled(false);
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You have defeated the monster: " + "\n" + gob.getTypeName());
+                    
+                    if(dropItemsChance == 1)
+                    {
+                        this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "The monster has dropped a Health potion and and you have received some rage, if youre not at the item limit");
+                        dropItems.chanceHPPOTION(pWarrior);
+                        dropItems.spWarrior(pWarrior);
+                        this.healthPotionBar.setValue(pWarrior.NUMBEROFHEALTHPOTIONS);
+                        this.specialBar.setValue(pWarrior.getRage());                        
+                    }
+                    
+                    score = score + 1; // value used to make the database need to update it on hte form , can add various values 
+                    this.actualScoreDisplay.setText(Integer.toString(score));
+                }
+                
+                setGoblin(gob);
+                setWarrior(pWarrior);
+     
+            }
+            
+            if(skeMonsterIndicate == true)
+            {
+                Skeleton ske = new Skeleton();
+                ske = getSkeleton();
+                
+                if(pWarrior.getAttackDmg() >= 25)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " You have consumed a Rage stack your attack is enraged" + "\n" + "You hit the " + ske.getTypeName() + " for:" + pWarrior.getAttackDmg() );
+                    ske.setHealth(ske.getHealth() - pWarrior.getAttackDmg());
+                    this.enemyHealthBar.setValue(ske.getHealth());
+                    pWarrior.changeRage();
+                    this.actualPlayerDMG.setText(Integer.toString(pWarrior.getAttackDmg()));
+                    setSkeleton(ske);
+                    setWarrior(pWarrior);
+                                           
+                }
+                
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You hit the " + ske.getTypeName() + " for:" + pWarrior.getAttackDmg());
+                    ske.setHealth(ske.getHealth() - pWarrior.getAttackDmg());
+                    this.enemyHealthBar.setValue(ske.getHealth());
+                }
+                ;
+                
+                if(chanceOfSpecial == 0)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " Oh no the Skeleton used his special skill and found one of his bones + 10 hp"
+                                                                               + "\n" + "You also recieve: " + ske.getAttackDmg() + "damage ");
+                    ske.specialSkill();
+                    pWarrior.setHealth(pWarrior.getHealth() - ske.getAttackDmg());
+                    this.playerHealth.setValue(pWarrior.getHealth());
+                    this.enemyHealthBar.setValue(ske.getHealth());
+                }
+                
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You also recieve: " + ske.getAttackDmg() + "damage " );
+                    pWarrior.setHealth(pWarrior.getHealth() - ske.getAttackDmg());
+                    this.playerHealth.setValue(pWarrior.getHealth());
+                }
+                
+                if(ske.getHealth() <= 0)
+                {
+                    disableMonsterSpwn = true;
+                    this.spwnMonster.setEnabled(true);
+                    this.attackButton.setEnabled(false);
+                    this.useHealthPotionButton.setEnabled(false);
+                    this.useSpecialSkillButton.setEnabled(false);
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You have defeated the monster: " + "\n" + ske.getTypeName());
+                    
+                    if(dropItemsChance == 1)
+                    {
+                        this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "The monster has dropped a Health potion and you have received some rage, if youre not at the item limit");
+                        dropItems.chanceHPPOTION(pWarrior);
+                        dropItems.spWarrior(pWarrior);
+                        this.healthPotionBar.setValue(pWarrior.NUMBEROFHEALTHPOTIONS);
+                        this.specialBar.setValue(pWarrior.getRage());                        
+                    }
+                    
+                    score = score + 1; // value used to make the database need to update it on hte form , can add various values 
+                    this.actualScoreDisplay.setText(Integer.toString(score));
+                }
+                
+                setSkeleton(ske);
+                setWarrior(pWarrior);
+            }
+            
+            if(vamMonsterIndicate == true)
+            {
+                Vampire vam = new Vampire();
+                vam = getVampire();
+                
+                if(pWarrior.getAttackDmg() >= 25)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " You have consumed a Rage stack your attack is enraged" + "\n" + "You hit the " + vam.getTypeName() + " for:" + pWarrior.getAttackDmg() );
+                    vam.setHealth(vam.getHealth() - pWarrior.getAttackDmg());
+                    this.enemyHealthBar.setValue(vam.getHealth());
+                    pWarrior.changeRage();
+                    this.actualPlayerDMG.setText(Integer.toString(pWarrior.getAttackDmg()));
+                    setVampire(vam);
+                    setWarrior(pWarrior);
+                                           
+                }
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You hit the " + vam.getTypeName() + " for:" + pWarrior.getAttackDmg());
+                    vam.setHealth(vam.getHealth() - pWarrior.getAttackDmg());
+                    this.enemyHealthBar.setValue(vam.getHealth());
+                    
+                }
+                               
+                if(chanceOfSpecial == 0)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " Oh no the Vampire used his special skill you lose 5 hp"
+                                                                               + "\n" + "You also recieve: " + vam.getAttackDmg() + "damage ");
+                    vam.realSpecialSkillVamp(pWarrior);
+                    pWarrior.setHealth(pWarrior.getHealth() - vam.getAttackDmg());
+                    this.playerHealth.setValue(pWarrior.getHealth());
+                    this.enemyHealthBar.setValue(vam.getHealth());
+                }
+                
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You also recieve: " + vam.getAttackDmg() + "damage " );
+                    pWarrior.setHealth(pWarrior.getHealth() - vam.getAttackDmg());
+                    this.playerHealth.setValue(pWarrior.getHealth());
+                }
+                
+                if(vam.getHealth() <= 0)
+                {
+                    disableMonsterSpwn = true;
+                    this.spwnMonster.setEnabled(true);
+                    this.attackButton.setEnabled(false);
+                    this.useHealthPotionButton.setEnabled(false);
+                    this.useSpecialSkillButton.setEnabled(false);
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You have defeated the monster: " + "\n" + vam.getTypeName());
+                    
+                    if(dropItemsChance == 1)
+                    {
+                        this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "The monster has dropped a Health potion and you have received some rage, if youre not at the item limit");
+                        dropItems.chanceHPPOTION(pWarrior);
+                        dropItems.spWarrior(pWarrior);
+                        this.healthPotionBar.setValue(pWarrior.NUMBEROFHEALTHPOTIONS);
+                        this.specialBar.setValue(pWarrior.getRage());                        
+                    }
+                    
+                    score = score + 1; // value used to make the database need to update it on hte form , can add various values 
+                    this.actualScoreDisplay.setText(Integer.toString(score));
+                }
+                
+                setVampire(vam);
+                setWarrior(pWarrior);
+                
+            }
+            
+            if(draMonsterIndicate == true)
+            {
+                Dragon dra = new Dragon();
+                dra = getDragon();
+                
+                if(pWarrior.getAttackDmg() >= 25)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " You have consumed a Rage stack your attack is enraged" + "\n" + "You hit the " + dra.getTypeName() + " for:" + pWarrior.getAttackDmg() );
+                    dra.setHealth(dra.getHealth() - pWarrior.getAttackDmg());
+                    this.enemyHealthBar.setValue(dra.getHealth());
+                    pWarrior.changeRage();
+                    this.actualPlayerDMG.setText(Integer.toString(pWarrior.getAttackDmg()));
+                    setDragon(dra);
+                    setWarrior(pWarrior);
+                                           
+                }
+                
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You hit the " + dra.getTypeName() + " for:" + pWarrior.getAttackDmg());
+                    dra.setHealth(dra.getHealth() - pWarrior.getAttackDmg());
+                    this.enemyHealthBar.setValue(dra.getHealth());
+                }
+                
+                
+                if(chanceOfSpecial == 0)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " Oh no the Dragon used his special skill, you take burn damage"
+                                                                               + "\n" + "You also recieve: " + dra.getAttackDmg() + "damage ");
+                    dra.realSpecialSkill(pWarrior);
+                    pWarrior.setHealth(pWarrior.getHealth() - dra.getAttackDmg());
+                    this.playerHealth.setValue(pWarrior.getHealth());
+                    this.enemyHealthBar.setValue(dra.getHealth());
+                }
+                
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You also recieve: " + dra.getAttackDmg() + "damage " );
+                    pWarrior.setHealth(pWarrior.getHealth() - dra.getAttackDmg());
+                    this.playerHealth.setValue(pWarrior.getHealth());
+                }
+                
+                if(dra.getHealth() <= 0)
+                {
+                    disableMonsterSpwn = true;
+                    this.spwnMonster.setEnabled(true);
+                    this.attackButton.setEnabled(false);
+                    this.useHealthPotionButton.setEnabled(false);
+                    this.useSpecialSkillButton.setEnabled(false);
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You have defeated the monster: " + "\n" + dra.getTypeName());
+                    
+                    if(dropItemsChance == 1)
+                    {
+                        this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "The monster has dropped a Health potion and you have received some rage, if youre not at the item limit");
+                        dropItems.chanceHPPOTION(pWarrior);
+                        dropItems.spWarrior(pWarrior);
+                        this.healthPotionBar.setValue(pWarrior.NUMBEROFHEALTHPOTIONS);
+                        this.specialBar.setValue(pWarrior.getRage());                        
+                    }
+                    
+                    score = score + 1; // value used to make the database need to update it on hte form , can add various values 
+                    this.actualScoreDisplay.setText(Integer.toString(score));
+                }
+                
+                setDragon(dra);
+                setWarrior(pWarrior);
+                
+            }
+            
+            if(pWarrior.getHealth() <= 0)
+            {
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "Your lifeless body falls to the ground, Better luck next time" );
+                this.attackButton.setEnabled(false);
+                this.useSpecialSkillButton.setEnabled(false);
+                this.useHealthPotionButton.setEnabled(false);
+                this.spwnMonster.setEnabled(false);
+            }
+            
+        }
+        
+        if(CharacterSelection.mageIndicate == true) 
+        {
+            Mage pMage = new Mage();
+            pMage = getMage();
+            
+            if(gobMonsterIndicate == true)
+            {
+                Goblin gob = new Goblin();
+                gob = getGoblin();
+                
+                if(pMage.getAttackDmg() >= 40)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " Luck was in your favor" + "\n" + "You hit the " + gob.getTypeName() + " for:" + pMage.getAttackDmg() );
+                    gob.setHealth(gob.getHealth() - pMage.getAttackDmg());
+                    this.enemyHealthBar.setValue(gob.getHealth());
+                    pMage.changeIntelligence();
+                    this.actualPlayerDMG.setText(Integer.toString(pMage.getAttackDmg()));
+                    setGoblin(gob);
+                    setMage(pMage);
+                                           
+                }
+                
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You hit the " + gob.getTypeName() + " for:" + pMage.getAttackDmg());
+                    gob.setHealth(gob.getHealth() - pMage.getAttackDmg());
+                    this.enemyHealthBar.setValue(gob.getHealth());
+                }
+                
+                if(chanceOfSpecial == 0)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " Oh no the goblin used his special skill you loose a health potion"
+                                                                               + "\n" + "You also recieve: " + gob.getAttackDmg() + "damage ");
+                    gob.specialSkill();
+                    pMage.setHealth(pMage.getHealth() - gob.getAttackDmg());
+                    this.playerHealth.setValue(pMage.getHealth());
+                    this.healthPotionBar.setValue(pMage.NUMBEROFHEALTHPOTIONS);
+                }
+                
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You also recieve: " + gob.getAttackDmg() + "damage " );
+                    pMage.setHealth(pMage.getHealth() - gob.getAttackDmg());
+                    this.playerHealth.setValue(pMage.getHealth());
+                }
+                
+                if(gob.getHealth() <= 0)
+                {
+                    disableMonsterSpwn = true;
+                    this.spwnMonster.setEnabled(true);
+                    this.attackButton.setEnabled(false);
+                    this.useHealthPotionButton.setEnabled(false);
+                    this.useSpecialSkillButton.setEnabled(false);
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You have defeated the monster: " + "\n" + gob.getTypeName());
+                    
+                    if(dropItemsChance == 1)
+                    {
+                        this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "The monster has dropped a Health potion and and you have received some intelligence, if youre not at the item limit");
+                        dropItems.chanceHPPOTION(pMage);
+                        dropItems.spMage(pMage);
+                        this.healthPotionBar.setValue(pMage.NUMBEROFHEALTHPOTIONS);
+                        this.specialBar.setValue(pMage.getIntelligence());                        
+                    }
+                    
+                    score = score + 1; // value used to make the database need to update it on hte form , can add various values 
+                    this.actualScoreDisplay.setText(Integer.toString(score));
+                }
+                
+                setGoblin(gob);
+                setMage(pMage);
+     
+            }
+            
+            if(skeMonsterIndicate == true)
+            {
+                Skeleton ske = new Skeleton();
+                ske = getSkeleton();
+                
+                if(pMage.getAttackDmg() >= 40)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " Luck was in your favor" + "\n" + "You hit the " + ske.getTypeName() + " for:" + pMage.getAttackDmg() );
+                    ske.setHealth(ske.getHealth() - pMage.getAttackDmg());
+                    this.enemyHealthBar.setValue(ske.getHealth());
+                    pMage.changeIntelligence();
+                    this.actualPlayerDMG.setText(Integer.toString(pMage.getAttackDmg()));
+                    setSkeleton(ske);
+                    setMage(pMage);
+                                           
+                }
+                
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You hit the " + ske.getTypeName() + " for:" + pMage.getAttackDmg());
+                    ske.setHealth(ske.getHealth() - pMage.getAttackDmg());
+                    this.enemyHealthBar.setValue(ske.getHealth());
+                }
+                ;
+                
+                if(chanceOfSpecial == 0)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " Oh no the Skeleton used his special skill and found one of his bones + 10 hp"
+                                                                               + "\n" + "You also recieve: " + ske.getAttackDmg() + "damage ");
+                    ske.specialSkill();
+                    pMage.setHealth(pMage.getHealth() - ske.getAttackDmg());
+                    this.playerHealth.setValue(pMage.getHealth());
+                    this.enemyHealthBar.setValue(ske.getHealth());
+                }
+                
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You also recieve: " + ske.getAttackDmg() + "damage " );
+                    pMage.setHealth(pMage.getHealth() - ske.getAttackDmg());
+                    this.playerHealth.setValue(pMage.getHealth());
+                }
+                
+                if(ske.getHealth() <= 0)
+                {
+                    disableMonsterSpwn = true;
+                    this.spwnMonster.setEnabled(true);
+                    this.attackButton.setEnabled(false);
+                    this.useHealthPotionButton.setEnabled(false);
+                    this.useSpecialSkillButton.setEnabled(false);
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You have defeated the monster: " + "\n" + ske.getTypeName());
+                    
+                    if(dropItemsChance == 1)
+                    {
+                        this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "The monster has dropped a Health potion and you have received some intelligence, if youre not at the item limit");
+                        dropItems.chanceHPPOTION(pMage);
+                        dropItems.spMage(pMage);
+                        this.healthPotionBar.setValue(pMage.NUMBEROFHEALTHPOTIONS);
+                        this.specialBar.setValue(pMage.getIntelligence());                        
+                    }
+                    
+                    score = score + 1; // value used to make the database need to update it on hte form , can add various values 
+                    this.actualScoreDisplay.setText(Integer.toString(score));
+                }
+                
+                setSkeleton(ske);
+                setMage(pMage);
+            }
+            
+            if(vamMonsterIndicate == true)
+            {
+                Vampire vam = new Vampire();
+                vam = getVampire();
+                
+                if(pMage.getAttackDmg() >= 40)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " Luck was in your favor" + "\n" + "You hit the " + vam.getTypeName() + " for:" + pMage.getAttackDmg() );
+                    vam.setHealth(vam.getHealth() - pMage.getAttackDmg());
+                    this.enemyHealthBar.setValue(vam.getHealth());
+                    pMage.changeIntelligence();
+                    this.actualPlayerDMG.setText(Integer.toString(pMage.getAttackDmg()));
+                    setVampire(vam);
+                    setMage(pMage);
+                                           
+                }
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You hit the " + vam.getTypeName() + " for:" + pMage.getAttackDmg());
+                    vam.setHealth(vam.getHealth() - pMage.getAttackDmg());
+                    this.enemyHealthBar.setValue(vam.getHealth());
+                    
+                }
+                               
+                if(chanceOfSpecial == 0)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " Oh no the Vampire used his special skill you lose 5 hp"
+                                                                               + "\n" + "You also recieve: " + vam.getAttackDmg() + "damage ");
+                    vam.realSpecialSkillVamp(pMage);
+                    pMage.setHealth(pMage.getHealth() - vam.getAttackDmg());
+                    this.playerHealth.setValue(pMage.getHealth());
+                    this.enemyHealthBar.setValue(vam.getHealth());
+                }
+                
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You also recieve: " + vam.getAttackDmg() + "damage " );
+                    pMage.setHealth(pMage.getHealth() - vam.getAttackDmg());
+                    this.playerHealth.setValue(pMage.getHealth());
+                }
+                
+                if(vam.getHealth() <= 0)
+                {
+                    disableMonsterSpwn = true;
+                    this.spwnMonster.setEnabled(true);
+                    this.attackButton.setEnabled(false);
+                    this.useHealthPotionButton.setEnabled(false);
+                    this.useSpecialSkillButton.setEnabled(false);
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You have defeated the monster: " + "\n" + vam.getTypeName());
+                    
+                    if(dropItemsChance == 1)
+                    {
+                        this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "The monster has dropped a Health potion and you have received some intelligence, if youre not at the item limit");
+                        dropItems.chanceHPPOTION(pMage);
+                        dropItems.spMage(pMage);
+                        this.healthPotionBar.setValue(pMage.NUMBEROFHEALTHPOTIONS);
+                        this.specialBar.setValue(pMage.getIntelligence());                        
+                    }
+                    
+                    score = score + 1; // value used to make the database need to update it on the form , can add various values 
+                    this.actualScoreDisplay.setText(Integer.toString(score));
+                }
+                
+                setVampire(vam);
+                setMage(pMage);
+                
+            }
+            
+            if(draMonsterIndicate == true)
+            {
+                Dragon dra = new Dragon();
+                dra = getDragon();
+                
+                if(pMage.getAttackDmg() >= 40)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " Luck was in your favor" + "\n" + "You hit the " + dra.getTypeName() + " for:" + pMage.getAttackDmg() );
+                    dra.setHealth(dra.getHealth() - pMage.getAttackDmg());
+                    this.enemyHealthBar.setValue(dra.getHealth());
+                    pMage.changeIntelligence();
+                    this.actualPlayerDMG.setText(Integer.toString(pMage.getAttackDmg()));
+                    setDragon(dra);
+                    setMage(pMage);
+                                           
+                }
+                
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You hit the " + dra.getTypeName() + " for:" + pMage.getAttackDmg());
+                    dra.setHealth(dra.getHealth() - pMage.getAttackDmg());
+                    this.enemyHealthBar.setValue(dra.getHealth());
+                }
+                
+                
+                if(chanceOfSpecial == 0)
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " Oh no the Dragon used his special skill, you take burn damage"
+                                                                               + "\n" + "You also recieve: " + dra.getAttackDmg() + "damage ");
+                    dra.realSpecialSkill(pMage);
+                    pMage.setHealth(pMage.getHealth() - dra.getAttackDmg());
+                    this.playerHealth.setValue(pMage.getHealth());
+                    this.enemyHealthBar.setValue(dra.getHealth());
+                }
+                
+                else
+                {
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You also recieve: " + dra.getAttackDmg() + "damage " );
+                    pMage.setHealth(pMage.getHealth() - dra.getAttackDmg());
+                    this.playerHealth.setValue(pMage.getHealth());
+                }
+                
+                if(dra.getHealth() <= 0)
+                {
+                    disableMonsterSpwn = true;
+                    this.spwnMonster.setEnabled(true);
+                    this.attackButton.setEnabled(false);
+                    this.useHealthPotionButton.setEnabled(false);
+                    this.useSpecialSkillButton.setEnabled(false);
+                    this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You have defeated the monster: " + "\n" + dra.getTypeName());
+                    
+                    if(dropItemsChance == 1)
+                    {
+                        this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "The monster has dropped a Health potion and you have received some intelligence, if youre not at the item limit");
+                        dropItems.chanceHPPOTION(pMage);
+                        dropItems.spMage(pMage);
+                        this.healthPotionBar.setValue(pMage.NUMBEROFHEALTHPOTIONS);
+                        this.specialBar.setValue(pMage.getIntelligence());                        
+                    }
+                    
+                    score = score + 1; // value used to make the database need to update it on hte form , can add various values 
+                    this.actualScoreDisplay.setText(Integer.toString(score));
+                }
+                
+                setDragon(dra);
+                setMage(pMage);
+                
+            }
+            
+            if(pMage.getHealth() <= 0)
+            {
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "Your lifeless body falls to the ground, Better luck next time" );
+                this.attackButton.setEnabled(false);
+                this.useSpecialSkillButton.setEnabled(false);
+                this.useHealthPotionButton.setEnabled(false);
+                this.spwnMonster.setEnabled(false);
+            }
         }
         
     }//GEN-LAST:event_attackButtonActionPerformed
 
     private void useHealthPotionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useHealthPotionButtonActionPerformed
         UseItems useItem = new UseItems();
+        
         if(CharacterSelection.tankIndicate == true)
         {
             Tank pTankCombat = new Tank();
@@ -669,7 +1246,7 @@ public class Play extends javax.swing.JFrame {
                 this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You consumed a health potion recovering 30% of your HP");
                 useItem.useHealthPotion(pTankCombat);
                 this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + gob.getAttackDmg() + " damage");
-                pTankCombat.setShield(pTankCombat.getHealth() - gob.getAttackDmg());
+                pTankCombat.setHealth(pTankCombat.getHealth() - gob.getAttackDmg());
                 this.playerHealth.setValue(pTankCombat.getHealth());
                 this.healthPotionBar.setValue(pTankCombat.NUMBEROFHEALTHPOTIONS);
                 setTank(pTankCombat);      
@@ -682,7 +1259,7 @@ public class Play extends javax.swing.JFrame {
                 this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You consumed a health potion recovering 30% of your HP");
                 useItem.useHealthPotion(pTankCombat);
                 this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + ske.getAttackDmg() + " damage");
-                pTankCombat.setShield(pTankCombat.getHealth() - ske.getAttackDmg());
+                pTankCombat.setHealth(pTankCombat.getHealth() - ske.getAttackDmg());
                 this.playerHealth.setValue(pTankCombat.getHealth());
                 this.healthPotionBar.setValue(pTankCombat.NUMBEROFHEALTHPOTIONS);
                 setTank(pTankCombat);
@@ -697,7 +1274,7 @@ public class Play extends javax.swing.JFrame {
                 this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You consumed a health potion recovering 30% of your HP");
                 useItem.useHealthPotion(pTankCombat);
                 this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + vam.getAttackDmg() + " damage");
-                pTankCombat.setShield(pTankCombat.getHealth() - vam.getAttackDmg());
+                pTankCombat.setHealth(pTankCombat.getHealth() - vam.getAttackDmg());
                 this.playerHealth.setValue(pTankCombat.getHealth());
                 this.healthPotionBar.setValue(pTankCombat.NUMBEROFHEALTHPOTIONS);
                 setTank(pTankCombat);
@@ -710,7 +1287,7 @@ public class Play extends javax.swing.JFrame {
                 this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You consumed a health potion recovering 30% of your HP");
                 useItem.useHealthPotion(pTankCombat);
                 this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + dra.getAttackDmg() + " damage");
-                pTankCombat.setShield(pTankCombat.getHealth() - dra.getAttackDmg());
+                pTankCombat.setHealth(pTankCombat.getHealth() - dra.getAttackDmg());
                 this.playerHealth.setValue(pTankCombat.getHealth());
                 this.healthPotionBar.setValue(pTankCombat.NUMBEROFHEALTHPOTIONS);
                 setTank(pTankCombat);
@@ -722,14 +1299,145 @@ public class Play extends javax.swing.JFrame {
             }
             
         }
+        
+        if(CharacterSelection.warriorIndicate == true)
+        {
+            Warrior pWarrior = new Warrior();
+            pWarrior = getWarrior();
+            
+            if(gobMonsterIndicate == true && pWarrior.NUMBEROFHEALTHPOTIONS > 0)
+            {
+                Goblin gob = new Goblin();
+                gob = getGoblin();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You consumed a health potion recovering 30% of your HP");
+                useItem.useHealthPotion(pWarrior);
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + gob.getAttackDmg() + " damage");
+                pWarrior.setHealth(pWarrior.getHealth() - gob.getAttackDmg());
+                this.playerHealth.setValue(pWarrior.getHealth());
+                this.healthPotionBar.setValue(pWarrior.NUMBEROFHEALTHPOTIONS);
+                setWarrior(pWarrior);      
+            }
+            
+            if(skeMonsterIndicate == true && pWarrior.NUMBEROFHEALTHPOTIONS > 0)
+            {
+                Skeleton ske = new Skeleton();
+                ske = getSkeleton();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You consumed a health potion recovering 30% of your HP");
+                useItem.useHealthPotion(pWarrior);
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + ske.getAttackDmg() + " damage");
+                pWarrior.setHealth(pWarrior.getHealth() - ske.getAttackDmg());
+                this.playerHealth.setValue(pWarrior.getHealth());
+                this.healthPotionBar.setValue(pWarrior.NUMBEROFHEALTHPOTIONS);
+                setWarrior(pWarrior);
+                
+            }
+            
+            
+            if(vamMonsterIndicate == true && pWarrior.NUMBEROFHEALTHPOTIONS > 0)
+            {
+                Vampire vam = new Vampire();
+                vam = getVampire();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You consumed a health potion recovering 30% of your HP");
+                useItem.useHealthPotion(pWarrior);
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + vam.getAttackDmg() + " damage");
+                pWarrior.setHealth(pWarrior.getHealth() - vam.getAttackDmg());
+                this.playerHealth.setValue(pWarrior.getHealth());
+                this.healthPotionBar.setValue(pWarrior.NUMBEROFHEALTHPOTIONS);
+                setWarrior(pWarrior);
+            }
+            
+            if(draMonsterIndicate == true && pWarrior.NUMBEROFHEALTHPOTIONS > 0)
+            {
+                Dragon dra = new Dragon();
+                dra = getDragon();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You consumed a health potion recovering 30% of your HP");
+                useItem.useHealthPotion(pWarrior);
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + dra.getAttackDmg() + " damage");
+                pWarrior.setHealth(pWarrior.getHealth() - dra.getAttackDmg());
+                this.playerHealth.setValue(pWarrior.getHealth());
+                this.healthPotionBar.setValue(pWarrior.NUMBEROFHEALTHPOTIONS);
+                setWarrior(pWarrior);
+            }
+            
+            if(Warrior.NUMBEROFHEALTHPOTIONS <= 0)
+            {
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " You are out of health potions");
+            }
+        }
+        
+        if(CharacterSelection.mageIndicate == true)
+        {
+            Mage pMage = new Mage();
+            pMage = getMage();
+            
+            if(gobMonsterIndicate == true && pMage.NUMBEROFHEALTHPOTIONS > 0)
+            {
+                Goblin gob = new Goblin();
+                gob = getGoblin();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You consumed a health potion recovering 30% of your HP");
+                useItem.useHealthPotion(pMage);
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + gob.getAttackDmg() + " damage");
+                pMage.setHealth(pMage.getHealth() - gob.getAttackDmg());
+                this.playerHealth.setValue(pMage.getHealth());
+                this.healthPotionBar.setValue(pMage.NUMBEROFHEALTHPOTIONS);
+                setMage(pMage);      
+            }
+            
+            if(skeMonsterIndicate == true && pMage.NUMBEROFHEALTHPOTIONS > 0)
+            {
+                Skeleton ske = new Skeleton();
+                ske = getSkeleton();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You consumed a health potion recovering 30% of your HP");
+                useItem.useHealthPotion(pMage);
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + ske.getAttackDmg() + " damage");
+                pMage.setHealth(pMage.getHealth() - ske.getAttackDmg());
+                this.playerHealth.setValue(pMage.getHealth());
+                this.healthPotionBar.setValue(pMage.NUMBEROFHEALTHPOTIONS);
+                setMage(pMage);
+                
+            }
+            
+            
+            if(vamMonsterIndicate == true && pMage.NUMBEROFHEALTHPOTIONS > 0)
+            {
+                Vampire vam = new Vampire();
+                vam = getVampire();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You consumed a health potion recovering 30% of your HP");
+                useItem.useHealthPotion(pMage);
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + vam.getAttackDmg() + " damage");
+                pMage.setHealth(pMage.getHealth() - vam.getAttackDmg());
+                this.playerHealth.setValue(pMage.getHealth());
+                this.healthPotionBar.setValue(pMage.NUMBEROFHEALTHPOTIONS);
+                setMage(pMage);
+            }
+            
+            if(draMonsterIndicate == true && pMage.NUMBEROFHEALTHPOTIONS > 0)
+            {
+                Dragon dra = new Dragon();
+                dra = getDragon();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You consumed a health potion recovering 30% of your HP");
+                useItem.useHealthPotion(pMage);
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + dra.getAttackDmg() + " damage");
+                pMage.setHealth(pMage.getHealth() - dra.getAttackDmg());
+                this.playerHealth.setValue(pMage.getHealth());
+                this.healthPotionBar.setValue(pMage.NUMBEROFHEALTHPOTIONS);
+                setMage(pMage);
+            }
+            
+            if(Warrior.NUMBEROFHEALTHPOTIONS <= 0)
+            {
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + " You are out of health potions");
+            }
+        }
     }//GEN-LAST:event_useHealthPotionButtonActionPerformed
 
     private void useSpecialSkillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useSpecialSkillButtonActionPerformed
         
-        Tank pTankCombat = new Tank();
-        pTankCombat = getTank();
+        
         if(CharacterSelection.tankIndicate == true)
         {
+            Tank pTankCombat = new Tank();
+            pTankCombat = getTank();
            
             if(gobMonsterIndicate == true && pTankCombat.getShield() > 0)
             {
@@ -790,6 +1498,144 @@ public class Play extends javax.swing.JFrame {
                 this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You have no extra shield");
             }
        
+        }
+        
+        if(CharacterSelection.warriorIndicate == true) 
+        {
+            Warrior pWarrior = new Warrior();
+            pWarrior = getWarrior();
+            
+            if(gobMonsterIndicate == true && pWarrior.getRage() > 0)
+            {
+                Goblin gob = new Goblin();
+                gob = getGoblin();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You utilize the rage of the warrior plus 10 Attack damage for the next turn");
+                pWarrior.specialSkill();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + gob.getAttackDmg() + " damage");
+                pWarrior.setHealth(pWarrior.getHealth() - gob.getAttackDmg());
+                this.playerHealth.setValue(pWarrior.getHealth());
+                this.actualPlayerDMG.setText(Integer.toString(pWarrior.getAttackDmg()));
+                this.specialBar.setValue(pWarrior.getRage());
+                setWarrior(pWarrior);
+                    
+            }
+                
+            if(skeMonsterIndicate == true && pWarrior.getRage() > 0)
+            {
+                Skeleton ske = new Skeleton();
+                ske = getSkeleton();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You utilize the rage of the warrior plus 10 Attack damage for the next turn");
+                pWarrior.specialSkill();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + ske.getAttackDmg() + " damage");
+                pWarrior.setHealth(pWarrior.getHealth() - ske.getAttackDmg());
+                this.playerHealth.setValue(pWarrior.getHealth());
+                this.actualPlayerDMG.setText(Integer.toString(pWarrior.getAttackDmg()));
+                this.specialBar.setValue(pWarrior.getRage());
+                setWarrior(pWarrior);
+            }
+                
+            if(vamMonsterIndicate == true && pWarrior.getRage() > 0)
+            {
+                Vampire vam = new Vampire();
+                vam = getVampire();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You utilize the rage of the warrior plus 10 Attack damage for the next turn");
+                pWarrior.specialSkill();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + vam.getAttackDmg() + " damage");
+                pWarrior.setHealth(pWarrior.getHealth() - vam.getAttackDmg());
+                this.playerHealth.setValue(pWarrior.getHealth());
+                this.actualPlayerDMG.setText(Integer.toString(pWarrior.getAttackDmg()));
+                this.specialBar.setValue(pWarrior.getRage());
+                setWarrior(pWarrior);
+            }
+               
+            if(draMonsterIndicate == true && pWarrior.getRage() > 0)
+            {
+                Dragon dra = new Dragon();
+                dra = getDragon();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You utilize the rage of the warrior plus 10 Attack damage for the next turn");
+                pWarrior.specialSkill();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + dra.getAttackDmg() + " damage");
+                pWarrior.setHealth(pWarrior.getHealth() - dra.getAttackDmg());
+                this.playerHealth.setValue(pWarrior.getHealth());
+                this.actualPlayerDMG.setText(Integer.toString(pWarrior.getAttackDmg()));
+                this.specialBar.setValue(pWarrior.getRage());
+                setWarrior(pWarrior);
+            }
+            
+            
+            if(pWarrior.getRage() == 0)
+            {
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You have no Rage remaining");
+            }
+        }
+        
+        if(CharacterSelection.mageIndicate == true)
+        {
+            Mage pMage = new Mage();
+            pMage = getMage();
+            
+            if(gobMonsterIndicate == true && pMage.getIntelligence() > 0)
+            {
+                Goblin gob = new Goblin();
+                gob = getGoblin();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You utilize the chance of luck , if your lucky you double your Attack Damage");
+                pMage.specialSkill();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + gob.getAttackDmg() + " damage");
+                pMage.setHealth(pMage.getHealth() - gob.getAttackDmg());
+                this.playerHealth.setValue(pMage.getHealth());
+                this.actualPlayerDMG.setText(Integer.toString(pMage.getAttackDmg()));
+                this.specialBar.setValue(pMage.getIntelligence());
+                setMage(pMage);
+                    
+            }
+                
+            if(skeMonsterIndicate == true &&  pMage.getIntelligence() > 0)
+            {
+                Skeleton ske = new Skeleton();
+                ske = getSkeleton();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You utilize the chance of luck , if your lucky you double your Attack Damage");
+                pMage.specialSkill();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + ske.getAttackDmg() + " damage");
+                pMage.setHealth(pMage.getHealth() - ske.getAttackDmg());
+                this.playerHealth.setValue(pMage.getHealth());
+                this.actualPlayerDMG.setText(Integer.toString(pMage.getAttackDmg()));
+                this.specialBar.setValue(pMage.getIntelligence());
+                setMage(pMage);
+            }
+                
+            if(vamMonsterIndicate == true && pMage.getIntelligence() > 0)
+            {
+                Vampire vam = new Vampire();
+                vam = getVampire();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You utilize the chance of luck , if your lucky you double your Attack Damage");
+                pMage.specialSkill();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + vam.getAttackDmg() + " damage");
+                pMage.setHealth(pMage.getHealth() - vam.getAttackDmg());
+                this.playerHealth.setValue(pMage.getHealth());
+                this.actualPlayerDMG.setText(Integer.toString(pMage.getAttackDmg()));
+                this.specialBar.setValue(pMage.getIntelligence());
+                setMage(pMage);
+            }
+               
+            if(draMonsterIndicate == true && pMage.getIntelligence() > 0)
+            {
+                Dragon dra = new Dragon();
+                dra = getDragon();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You utilize the chance of luck , if your lucky you double your Attack Damage");
+                pMage.specialSkill();
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You still get attacked" + "\n" + "You receive: " + dra.getAttackDmg() + " damage");
+                pMage.setHealth(pMage.getHealth() - dra.getAttackDmg());
+                this.playerHealth.setValue(pMage.getHealth());
+                this.actualPlayerDMG.setText(Integer.toString(pMage.getAttackDmg()));
+                this.specialBar.setValue(pMage.getIntelligence());
+                setMage(pMage);
+            }
+            
+            
+            if(pMage.getIntelligence() == 0)
+            {
+                this.battleLogTxtField.setText(battleLogTxtField.getText() + "\n" + "You have no Intelligence remaining");
+            }
         }
     }//GEN-LAST:event_useSpecialSkillButtonActionPerformed
 
