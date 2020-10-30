@@ -169,6 +169,8 @@ public class CharacterSelection extends javax.swing.JFrame {
         warriorCheck.setEnabled(false);
         startAdventure.setEnabled(true);
         tankIndicate = true;
+        warriorIndicate = false;
+        mageIndicate = false;
         if(tankCheck.isSelected() == false)
         {
             mageCheck.setEnabled(true);
@@ -183,6 +185,8 @@ public class CharacterSelection extends javax.swing.JFrame {
         tankCheck.setEnabled(false);
         startAdventure.setEnabled(true);
         warriorIndicate = true;
+        mageIndicate = false;
+        tankIndicate = false;
         if(warriorCheck.isSelected() == false)
         {
             mageCheck.setEnabled(true);
@@ -197,6 +201,8 @@ public class CharacterSelection extends javax.swing.JFrame {
         tankCheck.setEnabled(false);
         startAdventure.setEnabled(true);
         mageIndicate = true;
+        tankIndicate = false;
+        warriorIndicate = false;
         if(mageCheck.isSelected() == false)
         {
             warriorCheck.setEnabled(true);
